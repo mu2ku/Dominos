@@ -4,6 +4,7 @@
 /*------------- Variables (state) -------------*/
 
 let deck = []
+let dominosPicked = []
 let playerHand = []
 let opponentHand = []
 
@@ -11,10 +12,15 @@ let opponentHand = []
 
 let resetBtn = document.getElementById('reset-btn')
 let drawBtn = document.getElementById('draw-btn')
+let board = document.querySelector('#board')
+let opponent = document.querySelector('#opponent')
+let player = document.querySelector('#player')
+let deal = document.querySelector('#deal')
 
 
 /*-------------- Event Listeners --------------*/
 
+resetBtn.addEventListener('click',handleClick)
 
 /*----------------- Functions -----------------*/
 
@@ -25,14 +31,22 @@ function init(){
 }
 
 function handleClick(){
+  resetBtn.innerText = "Reset Game"
   if (deck.length > 0){
-    let randIdx = Math.floor(Math.random()*deck.length)
-    let playerDominos = deck.splice(randIdx,7)
-    let opponentDominos = deck.splice(randIdx,7)
-    playerHand.push(playerDominos)
-    opponentHand.push(opponentDominos)
-    render(playerDominos)
-    render(opponentDominos)
-    render(deck)
+    for (let i=0;i<14;i++){
+      let randIdx = Math.floor(Math.random()*deck.length)
+      let shuffle = deck.splice(randIdx,1)
+      dominosPicked.push(shuffle)
+      // console.log(dominosPicked)
+    }
+    // let opponentDominos = deck.splice(randIdx,7)
+    // playerHand.push(playerDominos)
+    // opponentHand.push(opponentDominos)
+    render(dominosPicked)
   }
+}
+
+function render(dominosPicked){
+  playerHand = dominosPicked.splice(0,7)
+  opponentHand = dominosPicked.splice(0,7)
 }
