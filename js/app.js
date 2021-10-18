@@ -14,13 +14,14 @@ let resetBtn = document.getElementById('reset-btn')
 let drawBtn = document.getElementById('draw-btn')
 let board = document.querySelector('.board')
 let opponent = document.querySelector('.opponent')
-let player = document.querySelector('.player')
+let player = document.querySelectorAll('.player')
 let deal = document.querySelector('.deal')
 
 
 /*-------------- Event Listeners --------------*/
 
 resetBtn.addEventListener('click',handleClick)
+player.forEach((element,idx)=>{player[idx].addEventListener('click',test)})
 
 /*----------------- Functions -----------------*/
 
@@ -45,7 +46,13 @@ function handleClick(){
 function render(dominosPicked){
   playerHand = dominosPicked.splice(0,7)
   opponentHand = dominosPicked.splice(0,7)
-  for (let i=0;i<playerHand.length;i++){
-    player.classList.add(playerHand[i])
+  console.log(playerHand)
+  console.log(opponentHand)
+  console.log(dominosPicked)
+}
+
+function test(evt){
+  if(evt.target.id !== "player"){
+    evt.stopPropagation(console.log('success'))
   }
 }
