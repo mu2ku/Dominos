@@ -33,6 +33,10 @@ body {
   grid-row: 2/6;
 }
 
+.btn {
+  grid-column:7/8;
+}
+
 .d0_0 {
   background-image: url(https://imgur.com/Zd4g5x1);
 }
