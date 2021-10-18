@@ -22,7 +22,12 @@ body {
 .player{
   background-color: darksalmon;
   grid-column:2/6;
-  grid-row:5/7;}
+  grid-row:5/7;
+  display:grid;
+  grid-template-columns: repeat(7,1fr);
+  grid-template-rows: subgrid;
+  gap:10px;
+}
 
 .deal {
   background-color: #f9f871;
