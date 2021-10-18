@@ -1,0 +1,120 @@
+body {
+  display: grid;
+  font-family: sans-serif;
+  font-size: 24px;
+  margin: 0;
+  min-height: 100vh;
+  grid-template-columns: 0.5fr 0.5fr 2fr 1fr 1fr 0.5fr 1fr;
+  grid-template-rows: 0.5fr 0.5fr 2fr 0.5fr 0.5fr 0.5fr;
+  background-color: grey;
+}
+
+.board {
+  background-color: #38b18a;
+  grid-column: 2/2;
+  grid-row: 2/4;
+}
+
+.opponent {
+  background-color: #92d97c;
+  grid-column:3/6;
+  grid-row:1/2;
+}
+
+.player{
+  background-color: darksalmon;
+  grid-column:3/6;
+  grid-row:5/7;
+}
+
+.deal {
+  background-color: #f9f871;
+  grid-column:7/8;
+  grid-row: 2/6;
+}
+
+.d0_0 {
+  background-image: url(https://imgur.com/Zd4g5x1);
+}
+
+.d0_1 {
+  background-image: url(https://imgur.com/pwcyoTU);
+}
+.d0_2 {
+  background-image: url(https://imgur.com/5tIqLoO);
+}
+.d0_3 {
+  background-image: url(https://imgur.com/g9KY4Zg);
+}
+.d0_4 {
+  background-image: url(https://imgur.com/vpbLPl4);
+}
+.d0_5 {
+  background-image: url(https://imgur.com/0GrhPZl);
+}
+.d0_6 {
+  background-image: url(https://imgur.com/GFN1BYK);
+}
+.d1_1 {
+  background-image: url(https://imgur.com/UIGfHHw);
+}
+.d1_2 {
+  background-image: url(https://imgur.com/MtzZLKl);
+}
+.d1_3 {
+  background-image: url(https://imgur.com/rV3xy75);
+}
+.d1_4 {
+  background-image: url(https://imgur.com/08bgnip);
+}
+.d1_5 {
+  background-image: url(https://imgur.com/VYUjat9);
+}
+.d1_6 {
+  background-image: url(https://imgur.com/uQZ0Txh);
+}
+.d2_2 {
+  background-image: url(https://imgur.com/gGacKMW);
+}
+.d2_3 {
+  background-image: url(https://imgur.com/GECrWwU);
+}
+.d2_4 {
+  background-image: url(https://imgur.com/QbkRNTM);
+}
+.d2_5 {
+  background-image: url(https://imgur.com/Zeood5Z);
+}
+.d2_6 {
+  background-image: url(https://imgur.com/TgXzzx7);
+}
+.d3_3 {
+  background-image: url(https://imgur.com/7LIb9M9);
+}
+.d3_4 {
+  background-image: url(https://imgur.com/oddjzgh);
+}
+.d3_5 {
+  background-image: url(https://imgur.com/KU9rFzg);
+}
+.d3_6 {
+  background-image: url(https://imgur.com/GOXtFYW);
+}
+.d4_4 {
+  background-image: url(https://imgur.com/wzSMS6T);
+}
+.d4_5 {
+  background-image: url(https://imgur.com/exrlKGO);
+}
+.d4_6 {
+  background-image: url(https://imgur.com/fq7UH1T);
+}
+.d5_5 {
+  background-image: url(https://imgur.com/aCQNkhM);
+}
+.d5_6 {
+  background-image: url(https://imgur.com/C8bZZL5);
+}
+.d6_6 {
+  background-image: url(https://imgur.com/b18YHMr);
+}
