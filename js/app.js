@@ -45,7 +45,7 @@ function handleClick(){
 function render(dominosPicked){
   playerHand = dominosPicked.splice(0,7)
   opponentHand = dominosPicked.splice(0,7)
-  // for (let i=0;i<playerHand.length;i++){
-  //   player.classList.add(playerHand[i])
-  // }
+  for (let i=0;i<playerHand.length;i++){
+    player.classList.add(playerHand[i])
+  }
 }
