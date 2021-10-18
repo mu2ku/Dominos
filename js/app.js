@@ -12,10 +12,10 @@ let opponentHand = []
 
 let resetBtn = document.getElementById('reset-btn')
 let drawBtn = document.getElementById('draw-btn')
-let board = document.querySelector('#board')
-let opponent = document.querySelector('#opponent')
-let player = document.querySelector('#player')
-let deal = document.querySelector('#deal')
+let board = document.querySelector('.board')
+let opponent = document.querySelector('.opponent')
+let player = document.querySelector('.player')
+let deal = document.querySelector('.deal')
 
 
 /*-------------- Event Listeners --------------*/
@@ -27,7 +27,7 @@ resetBtn.addEventListener('click',handleClick)
 init()
 
 function init(){
-  deck = ['0_0','0_1','0_2','0_3','0_4','0_5','0_6','1_1','1_2','1_3','1_4','1_5','1_6','2_2','2_3','2_4','2_5','2_6','3_3','3_4','3_5','3_6','4_4','4_5','4_6','5_5','5_6','6_6'] 
+  deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6'] 
 }
 
 function handleClick(){
@@ -36,12 +36,8 @@ function handleClick(){
     for (let i=0;i<14;i++){
       let randIdx = Math.floor(Math.random()*deck.length)
       let shuffle = deck.splice(randIdx,1)
-      dominosPicked.push(shuffle)
-      // console.log(dominosPicked)
+      dominosPicked.push(shuffle.toString())
     }
-    // let opponentDominos = deck.splice(randIdx,7)
-    // playerHand.push(playerDominos)
-    // opponentHand.push(opponentDominos)
     render(dominosPicked)
   }
 }
@@ -49,4 +45,7 @@ function handleClick(){
 function render(dominosPicked){
   playerHand = dominosPicked.splice(0,7)
   opponentHand = dominosPicked.splice(0,7)
+  for (let i=0;i<playerHand.length;i++){
+    player.classList.add(playerHand[i])
+  }
 }
