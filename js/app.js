@@ -64,9 +64,9 @@ player.forEach((element,idx)=>{player[idx].addEventListener('click',test)})
 init()
 
 function init(){
-  deck = dominos.map(element=>{return `${dominos.image}`})
-  console.log(deck)
-  // deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
+  // deck = dominos.map(element=>{return `${dominos.image}`})
+  // console.log(deck)
+  deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   startBtn.innerText = "Start Game"
 }
 
@@ -89,7 +89,7 @@ function render(dominosPicked){
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
     playerImg.setAttribute("id",`p${[i]}`)
-    playerImg.setAttribute("class","player")
+    playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
     playerImg.setAttribute("src",`/images/${playerHand[i]}.png`)
     playerBoard.append(playerImg)
   }
@@ -117,14 +117,70 @@ function render(dominosPicked){
 // }
 
 function test(evt){
-  if(evt.target.id !== "player"){
-    let boardImg = document.createElement("img")
-    boardImg.setAttribute('id',`${evt.target.id}`)
-    let source = evt.target.src.slice(21)
-    boardImg.setAttribute('src',`${source}`)
-    boardImg.classList.add('rotate')
-    board.append(boardImg)
-    evt.target.removeAttribute('src')
+  if (board.firstElementChild == null){
+    if(evt.target.id !== "player"){
+      let boardImg = document.createElement("img")
+      let source = evt.target.src.slice(21)
+      let id = evt.target.src.slice(29,33)
+      boardImg.setAttribute('id',`${id}`)
+      boardImg.setAttribute('src',`${source}`)
+      boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+      board.append(boardImg)
+      evt.target.removeAttribute('src')
+    }
+  } else if(board.firstElementChild == board.lastElementChild){
+    if (evt.target.id !== "player"){
+      let boardImg = document.createElement("img")
+      let source = evt.target.src.slice(21)
+      let id = evt.target.src.slice(29,33)
+      boardImg.setAttribute('id',`${id}`)
+      boardImg.setAttribute('src',`${source}`)
+      boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+      let classes = evt.target.className.split(' ')
+      if(board.firstElementChild.className.includes(classes[1] || board.firstElementChild.className.includes(classes[2]))){
+        let boardImgClasses = board.firstElementChild.className.split(' ')
+        if (boardImgClasses[1] == classes[1]){
+          boardImg.style.transform = 'rotate(90deg)'
+          board.prepend(boardImg)
+          evt.target.removeAttribute('src')
+        } else if (boardImgClasses[2] == classes[2]){
+          boardImg.style.transform = 'rotate(180deg)'
+          board.append(boardImg)
+          evt.target.removeAttribute('src')
+        }
+      }
+    }
+  } else {
+    if(evt.target.id !== "player"){
+      let boardImg = document.createElement("img")
+      let source = evt.target.src.slice(21)
+      let id = evt.target.src.slice(29,33)
+      boardImg.setAttribute('id',`${id}`)
+      boardImg.setAttribute('src',`${source}`)
+      boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+      let classes = evt.target.className.split(' ')
+      if(board.firstElementChild.className.includes(classes[1]) || board.firstElementChild.className.includes(classes[2])){
+        let boardImgClasses = board.firstElementChild.className.split(' ')
+        if (boardImgClasses[1] == classes[1]){
+          boardImg.style.transform = 'rotate(90deg)'
+        } else if (boardImgClasses[2] == classes[2]){
+          boardImg.style.transform = 'rotate(-90deg)'
+        }
+        board.prepend(boardImg)
+        evt.target.removeAttribute('src')
+      } else if(board.lastElementChild.className.includes(classes[1]) || board.lastElementChild.className.includes(classes[2])){
+        let boardImgClasses = board.firstElementChild.className.split(' ')
+        if (boardImgClasses[1] == classes[1]){
+          boardImg.style.transform = 'rotate(-90deg)'
+        } else if (boardImgClasses[2] == classes[2]){
+          boardImg.style.transform = 'rotate(90deg)'
+        }
+        board.append(boardImg)
+        evt.target.removeAttribute('src')
+      } else {
+        console.log(`not included`)
+      }
+    }
   }
 }
 
