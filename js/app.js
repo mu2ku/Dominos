@@ -1,9 +1,35 @@
 /*----------------- Constants -----------------*/
 
 let object = [
-  {type:'0_0', top:0, bottom:0},
-
-]
+  {type:'0_0', image:'d0_0', left:0, right:0},
+  {type:'0_1', image:'d0_1', left:0, right:1},
+  {type:'0_2', image:'d0_2', left:0, right:2},
+  {type:'0_3', image:'d0_3', left:0, right:3},
+  {type:'0_4', image:'d0_4', left:0, right:4},
+  {type:'0_5', image:'d0_5', left:0, right:5},
+  {type:'0_6', image:'d0_6', left:0, right:6},
+  {type:'1_1', image:'d1_1', left:1, right:1},
+  {type:'1_2', image:'d1_2', left:1, right:2},
+  {type:'1_3', image:'d1_3', left:1, right:3},
+  {type:'1_4', image:'d1_4', left:1, right:4},
+  {type:'1_5', image:'d1_5', left:1, right:5},
+  {type:'1_6', image:'d1_6', left:1, right:6},
+  {type:'2_2', image:'d2_2', left:2, right:2},
+  {type:'2_3', image:'d2_3', left:2, right:3},
+  {type:'2_4', image:'d2_4', left:2, right:4},
+  {type:'2_5', image:'d2_5', left:2, right:5},
+  {type:'2_6', image:'d2_6', left:2, right:6},
+  {type:'3_3', image:'d3_3', left:3, right:3},
+  {type:'3_4', image:'d3_4', left:3, right:4},
+  {type:'3_5', image:'d3_5', left:3, right:5},
+  {type:'3_6', image:'d3_6', left:3, right:6},
+  {type:'4_4', image:'d4_4', left:4, right:4},
+  {type:'4_5', image:'d4_5', left:4, right:5},
+  {type:'4_6', image:'d4_6', left:4, right:6},
+  {type:'5_5', image:'d5_5', left:5, right:5},
+  {type:'5_6', image:'d5_6', left:5, right:6},
+  {type:'6_6', image:'d6_6', left:6, right:6}
+];
 
 
 /*------------- Variables (state) -------------*/
@@ -12,6 +38,8 @@ let deck = []
 let dominosPicked = []
 let playerHand = []
 let opponentHand = []
+let isWinner = null
+let turn
 
 /*--------- Cached Element References ---------*/
 
@@ -23,7 +51,6 @@ let player = document.querySelectorAll('.player')
 let playerBoard = document.querySelector('#player')
 let opponentBoard = document.querySelector('#opponent')
 let deal = document.querySelector('.deal')
-let square = document.querySelectorAll('.square')
 
 
 /*-------------- Event Listeners --------------*/
@@ -36,6 +63,8 @@ player.forEach((element,idx)=>{player[idx].addEventListener('click',test)})
 init()
 
 function init(){
+  // deck = object.map(element=>{return `${object.image}`})
+  // console.log(deck)
   deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   resetBtn.innerText = "Start Game"
 }
@@ -92,7 +121,9 @@ function test(evt){
     boardImg.setAttribute('id',`${evt.target.id}`)
     let source = evt.target.src.slice(21)
     boardImg.setAttribute('src',`${source}`)
-    square[10].append(boardImg)
+    boardImg.classList.add('rotate')
+    board.append(boardImg)
     evt.target.removeAttribute('src')
   }
 }
+
