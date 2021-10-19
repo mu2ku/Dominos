@@ -107,17 +107,9 @@ function render(dominosPicked){
   }
 }
 
-// function test(evt){
-//   if(evt.target.id !== "player"){
-//     evt.stopPropagation(console.log(evt.target.src))
-//     evt.target.setAttribute('style','border:5px dashed red')
-//     let source = evt.target.src
-//     console.log(source.slice(21))
-//   }
-// }
-
 function test(evt){
-  if (board.firstElementChild == null){
+  //When board is empty
+  if (board.childElementCount == 0){
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
@@ -128,7 +120,10 @@ function test(evt){
       board.append(boardImg)
       evt.target.removeAttribute('src')
     }
-  } else if(board.firstElementChild == board.lastElementChild){
+  } 
+  
+  //When putting down the first domino
+  else if(board.childElementCount == 1){
     if (evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
@@ -137,8 +132,7 @@ function test(evt){
       boardImg.setAttribute('src',`${source}`)
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
       let classes = evt.target.className.split(' ')
-      if(board.firstElementChild.className.includes(classes[1] || board.firstElementChild.className.includes(classes[2]))){
-        let boardImgClasses = board.firstElementChild.className.split(' ')
+      let boardImgClasses = board.firstElementChild.className.split(' ')
         if (boardImgClasses[1] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
           board.prepend(boardImg)
@@ -147,10 +141,18 @@ function test(evt){
           boardImg.style.transform = 'rotate(180deg)'
           board.append(boardImg)
           evt.target.removeAttribute('src')
+        } else if (boardImgClasses[1] == classes[2]){
+          board.prepend(boardImg)
+          evt.target.removeAttribute('src')
+        } else if (boardImgClasses[2] == classes[1]){
+          board.append(boardImg)
+          evt.target.removeAttribute('src')
         }
       }
     }
-  } else {
+  
+  //When putting down subsequent dominos
+  else if (board.childElementCount > 1) {
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
@@ -163,20 +165,22 @@ function test(evt){
         let boardImgClasses = board.firstElementChild.className.split(' ')
         if (boardImgClasses[1] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
-        } else if (boardImgClasses[2] == classes[2]){
-          boardImg.style.transform = 'rotate(-90deg)'
+          board.prepend(boardImg)
+          evt.target.removeAttribute('src')
+        } else {
+          board.prepend(boardImg)
+          evt.target.removeAttribute('src')
         }
-        board.prepend(boardImg)
-        evt.target.removeAttribute('src')
       } else if(board.lastElementChild.className.includes(classes[1]) || board.lastElementChild.className.includes(classes[2])){
         let boardImgClasses = board.firstElementChild.className.split(' ')
-        if (boardImgClasses[1] == classes[1]){
+        if (boardImgClasses[2] == classes[2]){
           boardImg.style.transform = 'rotate(90deg)'
-        } else if (boardImgClasses[2] == classes[2]){
-          boardImg.style.transform = 'rotate(90deg)'
+          board.append(boardImg)
+          evt.target.removeAttribute('src')
+        } else {
+          board.append(boardImg)
+          evt.target.removeAttribute('src')
         }
-        board.append(boardImg)
-        evt.target.removeAttribute('src')
       } else {
         console.log(`not included`)
       }
