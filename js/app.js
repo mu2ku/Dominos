@@ -77,13 +77,22 @@ function render(dominosPicked){
   }
 }
 
+// function test(evt){
+//   if(evt.target.id !== "player"){
+//     evt.stopPropagation(console.log(evt.target.src))
+//     evt.target.setAttribute('style','border:5px dashed red')
+//     let source = evt.target.src
+//     console.log(source.slice(21))
+//   }
+// }
+
 function test(evt){
   if(evt.target.id !== "player"){
-    evt.stopPropagation(console.log('success'))
-    evt.target.setAttribute('style','border:5px dashed red')
+    let boardImg = document.createElement("img")
+    boardImg.setAttribute('id',`${evt.target.id}`)
+    let source = evt.target.src.slice(21)
+    boardImg.setAttribute('src',`${source}`)
+    square[10].append(boardImg)
+    evt.target.removeAttribute('src')
   }
-}
-
-function drawTile(){
-
 }
