@@ -55,6 +55,12 @@ img {
   grid-row:7/8;
 }
 
+
+#start-btn {
+  grid-column: 7/8;
+  grid-row:1/2;
+}
+
 #reset-btn {
   grid-column: 7/8;
   grid-row:1/2;
