@@ -12,7 +12,9 @@ body {
 .board {
   background-color: #38b18a;
   grid-column: 1/7;
-  grid-row: 2/7;}
+  grid-row: 2/7;
+  display:flex;
+}
 
 .opponent {
   background-color: #92d97c;
@@ -20,7 +22,6 @@ body {
   grid-row:1/2;
   display:flex;
   justify-content:space-around;
-  align-items:center;
 }
 
 .player{

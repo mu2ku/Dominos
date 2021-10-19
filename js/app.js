@@ -1,5 +1,10 @@
 /*----------------- Constants -----------------*/
 
+let object = [
+  {type:'0_0', top:0, bottom:0},
+
+]
+
 
 /*------------- Variables (state) -------------*/
 
@@ -16,7 +21,9 @@ let board = document.querySelector('.board')
 let opponent = document.querySelector('.opponent')
 let player = document.querySelectorAll('.player')
 let playerBoard = document.querySelector('#player')
+let opponentBoard = document.querySelector('#opponent')
 let deal = document.querySelector('.deal')
+let square = document.querySelectorAll('.square')
 
 
 /*-------------- Event Listeners --------------*/
@@ -51,7 +58,7 @@ function render(dominosPicked){
   playerHand = dominosPicked.splice(0,7)
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
-    playerImg.setAttribute("id","[i]")
+    playerImg.setAttribute("id",`p${[i]}`)
     playerImg.setAttribute("class","player")
     playerImg.setAttribute("src",`/images/${playerHand[i]}.png`)
     playerBoard.append(playerImg)
@@ -60,15 +67,23 @@ function render(dominosPicked){
   //render opponent hand to board
   if (opponentHand.length === 0){
     opponentHand = dominosPicked.splice(0,7)
+    for (let i=0;i<opponentHand.length;i++){
+      let opponentImg = document.createElement("img")
+      opponentImg.setAttribute('id',`o${[i]}`)
+      opponentImg.setAttribute('class','opponent')
+      opponentImg.setAttribute('src',`/images/${opponentHand[i]}.png`)
+      opponentBoard.append(opponentImg)
+    }
   }
 }
 
 function test(evt){
   if(evt.target.id !== "player"){
     evt.stopPropagation(console.log('success'))
+    evt.target.setAttribute('style','border:5px dashed red')
   }
 }
 
 function drawTile(){
-  
+
 }
