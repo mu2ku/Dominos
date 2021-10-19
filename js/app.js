@@ -171,7 +171,7 @@ function test(evt){
       } else if(board.lastElementChild.className.includes(classes[1]) || board.lastElementChild.className.includes(classes[2])){
         let boardImgClasses = board.firstElementChild.className.split(' ')
         if (boardImgClasses[1] == classes[1]){
-          boardImg.style.transform = 'rotate(-90deg)'
+          boardImg.style.transform = 'rotate(90deg)'
         } else if (boardImgClasses[2] == classes[2]){
           boardImg.style.transform = 'rotate(90deg)'
         }

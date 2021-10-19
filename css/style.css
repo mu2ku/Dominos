@@ -67,16 +67,8 @@ img {
 }
 
 .rotate {
-  transform: rotate(-90deg);
+  transform: rotate(90deg);
 }
-
-.left{}
-
-.right{}
-
-.above{}
-
-.below{}
 
 .d0_0 {
   background-image: url("../images/d0_0.png")}
