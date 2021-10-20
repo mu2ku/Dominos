@@ -36,6 +36,7 @@ init()
 function init(){
   deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   startBtn.innerText = "Start Game"
+  turn = 1 //1 is player, -1 is computer
 }
 
 function handleClick(){
@@ -68,7 +69,7 @@ function render(dominosPicked){
   playerHand.push(dominosPicked[0])
   console.log(playerHand,'player hand')
   let playerImg = document.createElement("img")
-  playerImg.classList.add('player',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked.slice(3)}`)
+  playerImg.classList.add('player',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
   console.log(playerImg.classList)
   playerImg.setAttribute("src",`/images/${dominosPicked[0]}.png`)
   playerBoard.append(playerImg)
@@ -79,9 +80,9 @@ function render(dominosPicked){
     opponentHand = dominosPicked.splice(0,7)
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
-      opponentImg.setAttribute('id',`o${[i]}`)
-      opponentImg.setAttribute('class','opponent')
-      opponentImg.setAttribute('src',`/images/${opponentHand[i]}.png`)
+      opponentImg.setAttribute('id',`${opponentHand[i]}`)
+      opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
+      opponentImg.setAttribute('src',`/images/blank.png`)
       opponentBoard.append(opponentImg)
     }
   }
@@ -99,6 +100,8 @@ function test(evt){
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
       board.append(boardImg)
       evt.target.removeAttribute('src')
+      turn = -1
+      computerTurn()
     }
   } 
   
@@ -119,18 +122,26 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
         } else if (firstBoardImgClasses[1] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
           boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
         } else if (firstBoardImgClasses[1] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
         }
       }
     }
@@ -156,11 +167,15 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
         }
@@ -169,6 +184,8 @@ function test(evt){
         if(lastBoardImgClasses[0] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
         } else if (lastBoardImgClasses[0] == classes[1]){
@@ -177,6 +194,8 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          turn = -1
+          computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
         }
@@ -190,16 +209,22 @@ function test(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
+            turn = -1
+            computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
           } else if (firstBoardImgClasses[0] == classes[1]){
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
+            turn = -1
+            computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
           } else if (lastBoardImgClasses[1] == classes[0]){
             board.append(boardImg)
             evt.target.removeAttribute('src')
+            turn = -1
+            computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
           } else if (lastBoardImgClasses[1] == classes[1]){
@@ -208,6 +233,8 @@ function test(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.append(boardImg)
             evt.target.removeAttribute('src')
+            turn = -1
+            computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
           } else {console.log('impossible!')}
@@ -218,12 +245,69 @@ function test(evt){
 
 function drawTile(){
   let randIdx = Math.floor(Math.random()*deck.length)
-  console.log(randIdx,'random')
   let draw = deck.splice(randIdx,1)
-  console.log(draw,'draw')
   dominosPicked.push(draw.toString())
-  console.log(dominosPicked,'dominos Picked')
   render(dominosPicked)
 }
+
+function computerTurn(){
+  if (turn == -1){
+    let right, left
+    let firstChild = board.firstElementChild.className.split(' ').splice(1,2)
+    let lastChild = board.lastElementChild.className.split(' ').splice(1,2)
+
+    for (let i=0;i<opponentHand.length;i++){
+      left = `_${opponentHand[i].slice(1,2)}`
+      right = opponentHand[i].slice(2)
+    }
+
+      if (right == firstChild[0] || left == lastChild[1] || left == firstChild[0] || right == lastChild[1]){
+        if (right == firstChild[0]){
+          let boardImg = document.createElement("img")
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          boardImg.classList.add('rotate',left,right)
+          board.prepend(boardImg)
+          let opponentImg = document.querySelector('.opponentImg')
+          opponentImg.removeAttribute('src')    
+          turn = 1
+          console.log(turn)
+          handleClick()
+        } else if (left == firstChild[0]){
+          let boardImg = document.createElement("img")
+          boardImg.style.transform = 'rotate(90deg)'
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          boardImg.classList.add('rotate',right,left)
+          board.prepend(boardImg)
+          let opponentImg = document.querySelector('.opponentImg')
+          opponentImg.removeAttribute('src')  
+          turn = 1
+          // console.log(turn)
+          handleClick()
+        } else if (left == lastChild[1]){
+          let boardImg = document.createElement("img")
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          boardImg.classList.add('rotate',left,right)
+          board.append(boardImg)
+          let opponentImg = document.querySelector('.opponentImg')
+          opponentImg.removeAttribute('src')  
+          turn = 1
+          console.log(turn)
+          handleClick()
+        } else if (right == lastChild[1]){
+          let boardImg = document.createElement("img")
+          boardImg.style.transform = 'rotate(90deg)'
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          boardImg.classList.add('rotate',right,left)
+          board.append(boardImg)
+          let opponentImg = document.querySelector('.opponentImg')
+          opponentImg.removeAttribute('src')  
+          turn = 1
+          console.log(turn)
+          handleClick()
+        }    
+      }
+    }
+}
+
 
 

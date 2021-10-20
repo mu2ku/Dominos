@@ -16,7 +16,8 @@ body {
   display:flex;
   justify-content: center;
   align-items: center;
-  gap:7vh;
+  flex-flow: row wrap;
+  gap: 0 7vh;
 }
 
 .opponent {
