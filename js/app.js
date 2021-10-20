@@ -8,7 +8,7 @@ let dominosPicked = []
 let playerHand = []
 let opponentHand = []
 let isWinner = null
-let turn
+let turn, removeIdx
 
 /*--------- Cached Element References ---------*/
 
@@ -57,7 +57,7 @@ function handleClick(){
 
 function render(dominosPicked){
   //render player hand to board
-  if (playerHand.length === 0){
+  if (playerHand.length === 0 && isWinner == null){
   playerHand = dominosPicked.splice(0,7)
   // console.log(playerHand)
   for(let i=0;i<playerHand.length;i++){
@@ -80,9 +80,9 @@ function render(dominosPicked){
   dominosPicked.pop()
 }
   //render opponent hand to board
-  if (opponentHand.length === 0){
+  if (opponentHand.length === 0 && isWinner == null){
     opponentHand = dominosPicked.splice(0,7)
-    console.log(opponentHand)
+    // console.log(opponentHand)
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
       opponentImg.setAttribute('id',`${opponentHand[i]}`)
@@ -102,6 +102,7 @@ function render(dominosPicked){
 }
 
 function test(evt){
+  win()
   //When board is empty
   if (board.childElementCount == 0){
     if(evt.target.id !== "player"){
@@ -113,6 +114,9 @@ function test(evt){
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
       board.append(boardImg)
       evt.target.removeAttribute('src')
+      removeIdx = source.slice(8,12)
+      let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+      playerHand.splice(index,1)  
       turn = -1
       msg.innerText = `It's the computer's turn`
       computerTurn()
@@ -136,6 +140,9 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -145,18 +152,27 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
         } else if (firstBoardImgClasses[1] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -185,6 +201,9 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -193,6 +212,9 @@ function test(evt){
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -204,6 +226,9 @@ function test(evt){
         if(lastBoardImgClasses[0] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -215,6 +240,9 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
+          removeIdx = source.slice(8,12)
+          let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
           computerTurn()
@@ -222,8 +250,7 @@ function test(evt){
           // console.log(lastBoardImgClasses,'last')
         }
       }
-    
-      
+          
         if (firstBoardImgClasses[1] !== null || lastBoardImgClasses[1] !== null){
           if (firstBoardImgClasses[0] == classes[0]){
             boardImg.style.transform = 'rotate(90deg)'
@@ -231,6 +258,9 @@ function test(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
+            removeIdx = source.slice(8,12)
+            let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
             computerTurn()
@@ -239,6 +269,9 @@ function test(evt){
           } else if (firstBoardImgClasses[0] == classes[1]){
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
+            removeIdx = source.slice(8,12)
+            let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
             computerTurn()
@@ -247,6 +280,9 @@ function test(evt){
           } else if (lastBoardImgClasses[1] == classes[0]){
             board.append(boardImg)
             evt.target.removeAttribute('src')
+            removeIdx = source.slice(8,12)
+            let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
             computerTurn()
@@ -258,13 +294,16 @@ function test(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.append(boardImg)
             evt.target.removeAttribute('src')
+            removeIdx = source.slice(8,12)
+            let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
             computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
-          } else {console.log('impossible!')}
-      }
+          }
+          }
     }
   }
 }
@@ -292,13 +331,13 @@ function computerTurn(){
         boardImg.classList.add('rotate',left,right)
         board.prepend(boardImg)
         let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-        console.log(index)
+        // console.log(index)
         opponentHand.splice(index,1) 
         let node = document.getElementById(`${opponent[index]}`)
         // opponentBoard.removeChild(node)
         turn = 1
         msg.innerText = `It's the player's turn` 
-        console.log(turn) 
+        // console.log(turn) 
         test()
       } else if (left == firstChild[0]){
         let boardImg = document.createElement("img")
@@ -307,13 +346,13 @@ function computerTurn(){
         boardImg.classList.add('rotate',right,left)
         board.prepend(boardImg)
         let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-        console.log(index)
+        // console.log(index)
         opponentHand.splice(index,1)  
         let node = document.getElementById(`${opponent[index]}`)
         // opponentBoard.removeChild(node)
         turn = 1
         msg.innerText = `It's the player's turn`  
-        console.log(turn)
+        // console.log(turn)
         test()
       } else if (left == lastChild[1]){
         let boardImg = document.createElement("img")
@@ -327,7 +366,7 @@ function computerTurn(){
         // opponentBoard.removeChild(node)
         turn = 1
         msg.innerText = `It's the player's turn`  
-        console.log(turn)
+        // console.log(turn)
         test()
       } else if (right == lastChild[1]){
         let boardImg = document.createElement("img")
@@ -336,19 +375,40 @@ function computerTurn(){
         boardImg.classList.add('rotate',right,left)
         board.append(boardImg)
         let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-        console.log(index)
+        // console.log(index)
         opponentHand.splice(index,1)    
         let node = document.getElementById(`${opponent[index]}`)
         // opponentBoard.removeChild(node)
         turn = 1
         msg.innerText = `It's the player's turn`  
-        console.log(turn)
+        // console.log(turn)
         test()
       }
-    } else {console.log('impossible!')}
+    } else {win()}
   }
   if (turn == -1){drawTile()}   
 }
 
+function win(){
+  if (opponentHand.length == 0 || playerHand.length == 0){
+    isWinner = turn * -1
+    turn = null
+    if (isWinner == 1){
+      msg.innerText = `Player Won!`
+      drawBtn.style.pointerEvents = 'none'
+    } else if (isWinner == -1){
+      msg.innerText = `Computer Won!`
+      drawBtn.style.pointerEvents = 'none'
+    }
+  } else if (deck.length == 0){
+    msg.innerText= `Cat's Game!`
+    turn = null
+    drawBtn.style.pointerEvents = 'none'
+  }
+}
+
+console.log(playerHand, 'player hand')
+console.log(opponentHand,'opponent hand')
+console.log(deck,'deck')
 
 

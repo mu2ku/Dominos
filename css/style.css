@@ -15,7 +15,7 @@ body {
   grid-row: 2/7;
   display:flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   flex-flow: row wrap;
   gap: 0 7vh;
 }
