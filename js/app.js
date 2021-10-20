@@ -87,14 +87,14 @@ function render(dominosPicked){
       opponentImg.setAttribute('id',`${opponentHand[i]}`)
       opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
       opponentImg.setAttribute('src',`/images/blank.png`)
-      opponentBoard.append(opponentImg)
+      opponentBoard.appendChild(opponentImg)
     }
   } else if (opponentHand.length > 0 && turn == -1){
     opponentHand.push(dominosPicked[0])
     let opponentImg = document.createElement("img")
     opponentImg.classList.add('opponent','opponentImg',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
     opponentImg.setAttribute('src',`/images/${dominosPicked[0]}.png`)
-    opponentBoard.append(opponentImg)
+    opponentBoard.appendChild(opponentImg)
     dominosPicked.pop()
   }
 }
@@ -290,10 +290,11 @@ function computerTurn(){
           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
           boardImg.classList.add('rotate',left,right)
           board.prepend(boardImg)
-          // oImg.removeAttribute('src') 
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
           console.log(index)
           opponentHand.splice(index,1) 
+          let node = document.getElementById(`${opponent[index]}`)
+          // opponentBoard.removeChild(node)
           turn = 1
           msg.innerText = `It's the player's turn` 
           console.log(turn) 
@@ -304,10 +305,11 @@ function computerTurn(){
           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
           boardImg.classList.add('rotate',right,left)
           board.prepend(boardImg)
-          // oImg.removeAttribute('src')
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
           console.log(index)
           opponentHand.splice(index,1)  
+          let node = document.getElementById(`${opponent[index]}`)
+          // opponentBoard.removeChild(node)
           turn = 1
           msg.innerText = `It's the player's turn`  
           console.log(turn)
@@ -317,10 +319,11 @@ function computerTurn(){
           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
           boardImg.classList.add('rotate',left,right)
           board.append(boardImg)
-          // oImg.removeAttribute('src')
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
           console.log(index)
           opponentHand.splice(index,1)  
+          let node = document.getElementById(`${opponent[index]}`)
+          // opponentBoard.removeChild(node)
           turn = 1
           msg.innerText = `It's the player's turn`  
           console.log(turn)
@@ -331,10 +334,11 @@ function computerTurn(){
           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
           boardImg.classList.add('rotate',right,left)
           board.append(boardImg)
-          // oImg.removeAttribute('src')
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
           console.log(index)
           opponentHand.splice(index,1)    
+          let node = document.getElementById(`${opponent[index]}`)
+          // opponentBoard.removeChild(node)
           turn = 1
           msg.innerText = `It's the player's turn`  
           console.log(turn)
