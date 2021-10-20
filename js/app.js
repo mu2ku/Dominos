@@ -119,6 +119,7 @@ function test(evt){
       playerHand.splice(index,1)  
       turn = -1
       msg.innerText = `It's the computer's turn`
+      win()
       computerTurn()
     }
   } 
@@ -145,6 +146,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
         } else if (firstBoardImgClasses[1] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
@@ -157,6 +159,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
@@ -166,6 +169,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
         } else if (firstBoardImgClasses[1] == classes[0]){
           board.append(boardImg)
@@ -175,6 +179,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
         }
       }
@@ -206,6 +211,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
@@ -217,6 +223,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
@@ -231,6 +238,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
@@ -245,6 +253,7 @@ function test(evt){
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
+          win()
           computerTurn()
           // console.log(firstBoardImgClasses,'first')
           // console.log(lastBoardImgClasses,'last')
@@ -263,6 +272,7 @@ function test(evt){
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
+            win()
             computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
@@ -274,6 +284,7 @@ function test(evt){
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
+            win()
             computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
@@ -285,6 +296,7 @@ function test(evt){
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
+            win()
             computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
@@ -299,6 +311,7 @@ function test(evt){
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
+            win()
             computerTurn()
             // console.log(firstBoardImgClasses,'first')
             // console.log(lastBoardImgClasses,'last')
@@ -406,9 +419,5 @@ function win(){
     drawBtn.style.pointerEvents = 'none'
   }
 }
-
-console.log(playerHand, 'player hand')
-console.log(opponentHand,'opponent hand')
-console.log(deck,'deck')
 
 

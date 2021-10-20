@@ -20,6 +20,11 @@ body {
   gap: 0 7vh;
 }
 
+.board > img:nth-child(n+10){
+  display: flex;
+  flex-flow: column wrap;
+}
+
 .opponent {
   background-color: #92d97c;
   grid-column:1/7;
