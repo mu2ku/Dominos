@@ -26,6 +26,7 @@ let deal = document.querySelector('.deal')
 /*-------------- Event Listeners --------------*/
 
 startBtn.addEventListener('click',handleClick)
+drawBtn.addEventListener('click',drawTile)
 player.forEach((element,idx)=>{player[idx].addEventListener('click',test)})
 
 /*----------------- Functions -----------------*/
@@ -53,13 +54,25 @@ function render(dominosPicked){
   //render player hand to board
   if (playerHand.length === 0){
   playerHand = dominosPicked.splice(0,7)
+  // console.log(playerHand)
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
     playerImg.setAttribute("id",`p${[i]}`)
     playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
+    // console.log(playerImg.classList)
     playerImg.setAttribute("src",`/images/${playerHand[i]}.png`)
+    // console.log(playerImg)
     playerBoard.append(playerImg)
   }
+} else if (playerHand.length > 0){
+  playerHand.push(dominosPicked[0])
+  console.log(playerHand,'player hand')
+  let playerImg = document.createElement("img")
+  playerImg.classList.add('player',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked.slice(3)}`)
+  console.log(playerImg.classList)
+  playerImg.setAttribute("src",`/images/${dominosPicked[0]}.png`)
+  playerBoard.append(playerImg)
+  dominosPicked.pop()
 }
   //render opponent hand to board
   if (opponentHand.length === 0){
@@ -143,29 +156,29 @@ function test(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-          console.log(firstBoardImgClasses,'first')
-          console.log(lastBoardImgClasses,'last')
+          // console.log(firstBoardImgClasses,'first')
+          // console.log(lastBoardImgClasses,'last')
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-          console.log(firstBoardImgClasses,'first')
-          console.log(lastBoardImgClasses,'last')
+          // console.log(firstBoardImgClasses,'first')
+          // console.log(lastBoardImgClasses,'last')
         }
       }
       if (lastBoardImgClasses[1] == null){
         if(lastBoardImgClasses[0] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
-          console.log(firstBoardImgClasses,'first')
-          console.log(lastBoardImgClasses,'last')
+          // console.log(firstBoardImgClasses,'first')
+          // console.log(lastBoardImgClasses,'last')
         } else if (lastBoardImgClasses[0] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
           boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
-          console.log(firstBoardImgClasses,'first')
-          console.log(lastBoardImgClasses,'last')
+          // console.log(firstBoardImgClasses,'first')
+          // console.log(lastBoardImgClasses,'last')
         }
       }
     
@@ -177,30 +190,40 @@ function test(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
-            console.log(firstBoardImgClasses,'first')
-            console.log(lastBoardImgClasses,'last')
+            // console.log(firstBoardImgClasses,'first')
+            // console.log(lastBoardImgClasses,'last')
           } else if (firstBoardImgClasses[0] == classes[1]){
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
-            console.log(firstBoardImgClasses,'first')
-            console.log(lastBoardImgClasses,'last')
+            // console.log(firstBoardImgClasses,'first')
+            // console.log(lastBoardImgClasses,'last')
           } else if (lastBoardImgClasses[1] == classes[0]){
             board.append(boardImg)
             evt.target.removeAttribute('src')
-            console.log(firstBoardImgClasses,'first')
-            console.log(lastBoardImgClasses,'last')
+            // console.log(firstBoardImgClasses,'first')
+            // console.log(lastBoardImgClasses,'last')
           } else if (lastBoardImgClasses[1] == classes[1]){
             boardImg.style.transform = 'rotate(90deg)'
             boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.append(boardImg)
             evt.target.removeAttribute('src')
-            console.log(firstBoardImgClasses,'first')
-            console.log(lastBoardImgClasses,'last')
-          } else {drawTile()}
+            // console.log(firstBoardImgClasses,'first')
+            // console.log(lastBoardImgClasses,'last')
+          } else {console.log('impossible!')}
       }
     }
   }
+}
+
+function drawTile(){
+  let randIdx = Math.floor(Math.random()*deck.length)
+  console.log(randIdx,'random')
+  let draw = deck.splice(randIdx,1)
+  console.log(draw,'draw')
+  dominosPicked.push(draw.toString())
+  console.log(dominosPicked,'dominos Picked')
+  render(dominosPicked)
 }
 
 
