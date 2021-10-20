@@ -120,7 +120,7 @@ function test(evt){
     }
   } 
   
-  //When putting down the first domino
+  //When putting down the second domino
   else if(board.childElementCount == 1){
     if (evt.target.id !== "player"){
       let boardImg = document.createElement("img")
@@ -129,20 +129,24 @@ function test(evt){
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-      let classes = evt.target.className.split(' ')
-      let boardImgClasses = board.firstElementChild.className.split(' ')
-        if (boardImgClasses[1] == classes[1]){
+      let classes = evt.target.className.split(' ').splice(1,2)
+      let firstBoardImgClasses = board.firstElementChild.className.split(' ').splice(1,2)
+        if (firstBoardImgClasses[0] == classes[0]){
           boardImg.style.transform = 'rotate(90deg)'
+          boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+          boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-        } else if (boardImgClasses[2] == classes[2]){
+        } else if (firstBoardImgClasses[1] == classes[1]){
           boardImg.style.transform = 'rotate(90deg)'
+          boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+          boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
-        } else if (boardImgClasses[1] == classes[2]){
+        } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-        } else if (boardImgClasses[2] == classes[1]){
+        } else if (firstBoardImgClasses[1] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
         }
@@ -158,27 +162,34 @@ function test(evt){
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-      let classes = evt.target.className.split(' ').shift()
-      let firstBoardImgClasses = board.firstElementChild.className.split(' ').shift()
-      let lastBoardImgClasses = board.lastElementChild.className.split(' ').shift()
+      let classes = evt.target.className.split(' ').splice(1,2)
+      let firstBoardImgClasses = board.firstElementChild.className.split(' ').splice(1,2)
+      console.log(firstBoardImgClasses)
+      let lastBoardImgClasses = board.lastElementChild.className.split(' ').splice(1,2)
       //For dominos with double values :(
       if (firstBoardImgClasses[1] == null){
         if(firstBoardImgClasses[0] == classes[0]){
           boardImg.style.transform = 'rotate(90deg)'
+          boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+          boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
+          console.log(firstBoardImgClasses)
         }
       } else if (firstBoardImgClasses[1] !== null){
           if (firstBoardImgClasses[0] == classes[0]){
             boardImg.style.transform = 'rotate(90deg)'
+            boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
+            boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
           } else if (firstBoardImgClasses[0] == classes[1]){
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
+            console.log(firstBoardImgClasses)
           } else if (lastBoardImgClasses[1] == classes[0]){
             board.append(boardImg)
             evt.target.removeAttribute('src')
