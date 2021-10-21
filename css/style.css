@@ -18,12 +18,16 @@ body {
   align-items: flex-start;
   flex-flow: row wrap;
   gap: 0 7vh;
+  padding:10px;
 }
 
-/* .board > img:nth-child(n+10){
-  display: flex;
-  flex-flow: column wrap;
-} */
+.board > img:first-child {
+  border: 6px dashed red;
+}
+
+.board > img:last-child {
+  border: 6px dashed red;
+}
 
 .opponent {
   background-image: url("../images/rustic_wood_tabletop.jpeg");
@@ -70,6 +74,11 @@ img {
 #reset-btn {
   grid-column: 7/8;
   grid-row:1/2;
+}
+
+#message {
+  color:white;
+  font-family: 'Homemade Apple', cursive;
 }
 
 .rotate {
@@ -161,4 +170,4 @@ img {
   background-image: url("../images/d6_6.png")}
 
   .dblank {
-    background-image: url("../images/d0_0.png")}
+    background-image: url("../images/blank.png")}
