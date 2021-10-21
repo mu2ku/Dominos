@@ -6,7 +6,7 @@
   
 <h1>Getting Started:</h1>
 
-Click [here](https://mu2ku.github.io/Dominos/) to play game.</br>
+Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 - Once the game has loaded press "Start Game" to start the game</br>
 - Click on the domino tiles shown on the bottom of the browser to play them to the board</br>
 - Click on the "Draw Tile" button to draw additional tiles if you cannot play a tile to the board</br>

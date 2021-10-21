@@ -47,16 +47,13 @@ function init(){
   removeChilds(playerBoard)
   removeChilds(opponentBoard)
   removeChilds(board)
-  startBtn.classList.remove('reset-btn')
 }
 
 function handleClick(){
   console.log('handle click')
+  startBtn.innerText = 'Restart Game'
+  if (turn == null){init()}
   msg.removeAttribute('hidden')
-  startBtn.innerText = 'Reset Game'
-  startBtn.classList.add('reset-btn')  
-  let resetBtn = document.querySelector('.reset-btn')
-  resetBtn.addEventListener('click',init)
   if (deck.length > 14){
     for (let i=0;i<14;i++){
       let randIdx = Math.floor(Math.random()*deck.length)
@@ -72,13 +69,13 @@ function render(dominosPicked){
   //render player hand to board
   if (playerHand.length === 0 && isWinner == null){
   playerHand = dominosPicked.splice(0,7)
-  // console.log(playerHand)
+  console.log(playerHand)
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
     playerImg.setAttribute("id",`d${playerHand[i].slice(1,2)}_${playerHand[i].slice(3)}`)
     playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
     // console.log(playerImg.classList)
-    playerImg.setAttribute("src",`images/${playerHand[i]}.png`)
+    playerImg.setAttribute("src",`/images/${playerHand[i]}.png`)
     // console.log(playerImg)
     playerBoard.append(playerImg)
   }
@@ -88,19 +85,19 @@ function render(dominosPicked){
   let playerImg = document.createElement("img")
   playerImg.classList.add('player',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
   // console.log(playerImg.classList)
-  playerImg.setAttribute("src",`images/${dominosPicked[0]}.png`)
+  playerImg.setAttribute("src",`/images/${dominosPicked[0]}.png`)
   playerBoard.append(playerImg)
   dominosPicked.pop()
 }
   //render opponent hand to board
   if (opponentHand.length === 0 && isWinner == null){
     opponentHand = dominosPicked.splice(0,7)
-    // console.log(opponentHand)
+    console.log(opponentHand)
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
       opponentImg.setAttribute('id',`${opponentHand[i]}`)
       opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
-      opponentImg.setAttribute('src',`images/blank.png`)
+      opponentImg.setAttribute('src',`/images/blank.png`)
       opponentBoard.appendChild(opponentImg)
     }
   } else if (opponentHand.length > 0 && turn == -1){
@@ -109,7 +106,7 @@ function render(dominosPicked){
     opponentImg.setAttribute('id',`${dominosPicked[0]}`)
     opponentImg.classList.add('opponent','opponentImg',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
     // opponentImg.setAttribute('src',`images/${dominosPicked[0]}.png`)
-    opponentImg.setAttribute('src',`images/blank.png`)
+    opponentImg.setAttribute('src',`/images/blank.png`)
     opponentBoard.appendChild(opponentImg)
     dominosPicked.pop()
     computerTurn()
@@ -123,16 +120,19 @@ function playerTurn(evt){
   if (board.childElementCount == 0){
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
-      let source = evt.target.src.slice(21)
-      console.log(evt.target.src)
-      let id = evt.target.src.slice(29,33)
+      let source = evt.target.src.slice(29)
+      // console.log(source)
+      let id = evt.target.src.slice(36,40)
+      // console.log(id)
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
       board.append(boardImg)
       evt.target.removeAttribute('src')
-      removeIdx = source.slice(8,12)
+      removeIdx = source.slice(7,11)
+      console.log(removeIdx,'remove index')
       let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+      console.log(index,'index')
       playerHand.splice(index,1)  
       turn = -1
       msg.innerText = `It's the computer's turn`
@@ -145,9 +145,10 @@ function playerTurn(evt){
   else if (board.childElementCount > 0) {
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
-      let source = evt.target.src.slice(21)
-      console.log(evt.target.src)
-      let id = evt.target.src.slice(29,33)
+      let source = evt.target.src.slice(29)
+      // console.log(source)
+      let id = evt.target.src.slice(36,40)
+      // console.log(id)
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
       boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
@@ -163,8 +164,10 @@ function playerTurn(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-          removeIdx = source.slice(8,12)
+          removeIdx = source.slice(7,11)
+          console.log(removeIdx,'remove index')
           let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          console.log('index')
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
@@ -173,8 +176,10 @@ function playerTurn(evt){
         } else if (firstBoardImgClasses[0] == classes[1]){
           board.prepend(boardImg)
           evt.target.removeAttribute('src')
-          removeIdx = source.slice(8,12)
+          removeIdx = source.slice(7,11)
+          console.log(removeIdx,'remove index')
           let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          console.log(index,'index')
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
@@ -186,8 +191,10 @@ function playerTurn(evt){
         if(lastBoardImgClasses[0] == classes[0]){
           board.append(boardImg)
           evt.target.removeAttribute('src')
-          removeIdx = source.slice(8,12)
+          removeIdx = source.slice(7,11)
+          console.log(removeIdx,'remove index')
           let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          console.log(index,'index')
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
@@ -199,8 +206,10 @@ function playerTurn(evt){
           boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
           board.append(boardImg)
           evt.target.removeAttribute('src')
-          removeIdx = source.slice(8,12)
+          removeIdx = source.slice(7,11)
+          console.log(removeIdx,'remove index')
           let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+          console.log(index,'index')
           playerHand.splice(index,1) 
           turn = -1
           msg.innerText = `It's the computer's turn`
@@ -216,8 +225,10 @@ function playerTurn(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
-            removeIdx = source.slice(8,12)
+            removeIdx = source.slice(7,11)
+            console.log(removeIdx,'remove index')
             let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            console.log(index,'index')
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
@@ -226,8 +237,10 @@ function playerTurn(evt){
           } else if (firstBoardImgClasses[0] == classes[1]){
             board.prepend(boardImg)
             evt.target.removeAttribute('src')
-            removeIdx = source.slice(8,12)
+            removeIdx = source.slice(7,11)
+            console.log(removeIdx,'remove index')
             let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            console.log(index,'index')
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
@@ -236,8 +249,10 @@ function playerTurn(evt){
           } else if (lastBoardImgClasses[1] == classes[0]){
             board.append(boardImg)
             evt.target.removeAttribute('src')
-            removeIdx = source.slice(8,12)
+            removeIdx = source.slice(7,11)
+            console.log(removeIdx,'remove index')
             let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            console.log(index,'index')
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
@@ -249,8 +264,10 @@ function playerTurn(evt){
             boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
             board.append(boardImg)
             evt.target.removeAttribute('src')
-            removeIdx = source.slice(8,12)
+            removeIdx = source.slice(7,11)
+            console.log(removeIdx,'remove index')
             let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
+            console.log(index)
             playerHand.splice(index,1) 
             turn = -1
             msg.innerText = `It's the computer's turn`
@@ -287,32 +304,51 @@ function computerTurn(){
       if (right == firstChild[0] || left == lastChild[1] || left == firstChild[0] || right == lastChild[1]){
         if (right == firstChild[0]){
           let boardImg = document.createElement("img")
-          boardImg.setAttribute('src',`images/d${left.slice(1)}${right}.png`)
+          console.log('success')
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          console.log('success')
           boardImg.classList.add('rotate',left,right)
+          console.log('success')
           board.prepend(boardImg)
+          console.log('success')
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          // console.log(index)
+          console.log('success')
+          console.log(index)
+          console.log('success')
           let node = document.getElementById(`${opponentHand[index]}`)
-          // console.log(node)
+          console.log('success')
+          console.log(node)
           node.removeAttribute('src')
+          console.log('success')
           opponentHand.splice(index,1) 
+          console.log('success')
           turn = 1
+          console.log('success')
           msg.innerText = `It's the player's turn` 
           console.log('success')
           win()
           playerTurn()
         } else if (left == firstChild[0]){
           let boardImg = document.createElement("img")
+          console.log('success')
           boardImg.style.transform = 'rotate(90deg)'
-          boardImg.setAttribute('src',`images/d${left.slice(1)}${right}.png`)
+          console.log('success')
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          console.log('success')
           boardImg.classList.add('rotate',right,left)
+          console.log('success')
           board.prepend(boardImg)
+          console.log('success')
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          // console.log(index)
+          console.log('success')
+          console.log(index)
           let node = document.getElementById(`${opponentHand[index]}`)
-          // console.log(node)
+          console.log('success')
+          console.log(node)
           node.removeAttribute('src')
+          console.log('success')
           opponentHand.splice(index,1)  
+          console.log('success')
           turn = 1
           msg.innerText = `It's the player's turn`
           console.log('success')  
@@ -320,15 +356,24 @@ function computerTurn(){
           playerTurn()
         } else if (left == lastChild[1]){
           let boardImg = document.createElement("img")
-          boardImg.setAttribute('src',`images/d${left.slice(1)}${right}.png`)
+          console.log('success')  
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          console.log('success')  
           boardImg.classList.add('rotate',left,right)
+          console.log('success')  
           board.append(boardImg)
+          console.log('success')  
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          // console.log(index)
+          console.log('success')  
+          console.log(index)
+          console.log('success')  
           let node = document.getElementById(`${opponentHand[index]}`)
-          // console.log(node)
+          console.log('success')  
+          console.log(node)
           node.removeAttribute('src')
+          console.log('success')  
           opponentHand.splice(index,1)  
+          console.log('success')  
           turn = 1
           msg.innerText = `It's the player's turn`  
           console.log('success')
@@ -336,16 +381,25 @@ function computerTurn(){
           playerTurn()
         } else if (right == lastChild[1]){
           let boardImg = document.createElement("img")
+          console.log('success')  
           boardImg.style.transform = 'rotate(90deg)'
-          boardImg.setAttribute('src',`images/d${left.slice(1)}${right}.png`)
+          console.log('success')  
+          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+          console.log('success')  
           boardImg.classList.add('rotate',right,left)
+          console.log('success')  
           board.append(boardImg)
+          console.log('success')  
           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          // console.log(index)
+          console.log('success')  
+          console.log(index)
           let node = document.getElementById(`${opponentHand[index]}`)
-          // console.log(node)
+          console.log('success')  
+          console.log(node)
           node.removeAttribute('src')
-          opponentHand.splice(index,1)    
+          console.log('success')  
+          opponentHand.splice(index,1)   
+          console.log('success')   
           turn = 1
           msg.innerText = `It's the player's turn`  
           console.log('success')
@@ -353,9 +407,12 @@ function computerTurn(){
           playerTurn()
         }
       }
+      else if (i == opponentHand.length-1){
+        console.log('draw')
+        drawTile()
+      }   
     }
   }
-  else {drawTile()}   
 }
 
 function win(){
