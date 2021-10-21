@@ -16,7 +16,6 @@ let startBtn = document.getElementById('start-btn')
 let drawBtn = document.getElementById('draw-btn')
 let board = document.querySelector('.board')
 let opponent = document.querySelector('.opponent')
-let oImg = document.querySelector('.opponentImg')
 let player = document.querySelectorAll('.player')
 let playerBoard = document.querySelector('#player')
 let opponentBoard = document.querySelector('#opponent')
@@ -37,12 +36,13 @@ init()
 function init(){
   deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   startBtn.innerText = "Start Game"
+  drawBtn.style.pointerEvents = 'auto'
   turn = 1
   dominosPicked = []
   playerHand = []
   opponentHand = []
   isWinner = null
-  msg.innerText = ' '
+  msg.innerText = ''
   removeChilds(playerBoard)
   removeChilds(opponentBoard)
   removeChilds(board)
@@ -135,67 +135,6 @@ function playerTurn(evt){
       computerTurn()
     }
   } 
-  
-  // // When putting down the second domino
-  // else if(board.childElementCount == 1){
-  //   if (evt.target.id !== "player"){
-  //     let boardImg = document.createElement("img")
-  //     let source = evt.target.src.slice(21)
-  //     let id = evt.target.src.slice(29,33)
-  //     boardImg.setAttribute('id',`${id}`)
-  //     boardImg.setAttribute('src',`${source}`)
-  //     boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-  //     let classes = evt.target.className.split(' ').splice(1,2)
-  //     let firstBoardImgClasses = board.firstElementChild.className.split(' ').splice(1,2)
-  //       if (firstBoardImgClasses[0] == classes[0]){
-  //         boardImg.style.transform = 'rotate(90deg)'
-  //         boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-  //         boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
-  //         board.prepend(boardImg)
-  //         evt.target.removeAttribute('src')
-  //         removeIdx = source.slice(8,12)
-  //         let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
-  //         playerHand.splice(index,1) 
-  //         turn = -1
-  //         msg.innerText = `It's the computer's turn`
-  //         win()
-  //         computerTurn()
-  //       } else if (firstBoardImgClasses[1] == classes[1]){
-  //         boardImg.style.transform = 'rotate(90deg)'
-  //         boardImg.classList.remove(`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-  //         boardImg.classList.add(`_${id.slice(3)}`,`_${id.slice(1,2)}`)
-  //         board.append(boardImg)
-  //         evt.target.removeAttribute('src')
-  //         removeIdx = source.slice(8,12)
-  //         let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
-  //         playerHand.splice(index,1) 
-  //         turn = -1
-  //         msg.innerText = `It's the computer's turn`
-  //         win()
-  //         computerTurn()
-  //       } else if (firstBoardImgClasses[0] == classes[1]){
-  //         board.prepend(boardImg)
-  //         evt.target.removeAttribute('src')
-  //         removeIdx = source.slice(8,12)
-  //         let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
-  //         playerHand.splice(index,1) 
-  //         turn = -1
-  //         msg.innerText = `It's the computer's turn`
-  //         win()
-  //         computerTurn()
-  //       } else if (firstBoardImgClasses[1] == classes[0]){
-  //         board.append(boardImg)
-  //         evt.target.removeAttribute('src')
-  //         removeIdx = source.slice(8,12)
-  //         let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
-  //         playerHand.splice(index,1) 
-  //         turn = -1
-  //         msg.innerText = `It's the computer's turn`
-  //         win()
-  //         computerTurn()
-  //       }
-  //     }
-  //   }
   
   //When putting down subsequent dominos
   else if (board.childElementCount > 1) {
