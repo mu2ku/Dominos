@@ -10,7 +10,7 @@ body {
 }
 
 .board {
-  background-color: #38b18a;
+  background-image: url("../images/green_felt_table.jpeg");
   grid-column: 1/7;
   grid-row: 2/7;
   display:flex;
@@ -20,13 +20,13 @@ body {
   gap: 0 7vh;
 }
 
-.board > img:nth-child(n+10){
+/* .board > img:nth-child(n+10){
   display: flex;
   flex-flow: column wrap;
-}
+} */
 
 .opponent {
-  background-color: #92d97c;
+  background-image: url("../images/rustic_wood_tabletop.jpeg");
   grid-column:1/7;
   grid-row:1/2;
   display:flex;
@@ -34,7 +34,7 @@ body {
 }
 
 .player{
-  background-color: darksalmon;
+  background-image: url("../images/rustic_wood_tabletop.jpeg");
   grid-column:1/7;
   grid-row:7/9;
   display:flex;
@@ -47,7 +47,7 @@ img {
 }
 
 .deal {
-  background-color: #f9f871;
+  background-image: url("../images/chalkboard.jpeg");
   grid-column:7/8;
   grid-row: 2/7;
   display:flex;
