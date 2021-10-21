@@ -137,7 +137,7 @@ function playerTurn(evt){
   } 
   
   //When putting down subsequent dominos
-  else if (board.childElementCount > 1) {
+  else if (board.childElementCount > 0) {
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
