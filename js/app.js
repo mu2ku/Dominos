@@ -103,8 +103,10 @@ function render(dominosPicked){
   } else if (opponentHand.length > 0 && turn == -1){
     opponentHand.push(dominosPicked[0])
     let opponentImg = document.createElement("img")
+    opponentImg.setAttribute('id',`${dominosPicked[0]}`)
     opponentImg.classList.add('opponent','opponentImg',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
-    opponentImg.setAttribute('src',`images/${dominosPicked[0]}.png`)
+    // opponentImg.setAttribute('src',`images/${dominosPicked[0]}.png`)
+    opponentImg.setAttribute('src',`images/blank.png`)
     opponentBoard.appendChild(opponentImg)
     dominosPicked.pop()
     computerTurn()
@@ -326,10 +328,14 @@ function drawTile(){
 function computerTurn(){
   let right, left
   let firstChild = board.firstElementChild.className.split(' ').splice(1,2)
+  console.log(firstChild,'first child')
   let lastChild = board.lastElementChild.className.split(' ').splice(1,2)
+  console.log(lastChild,'last child')
   for (let i=0;i<opponentHand.length;i++){
     left = `_${opponentHand[i].slice(1,2)}`
+    console.log(left,'left of opponent domino')
     right = opponentHand[i].slice(2)
+    console.log(right,'right of opponent domino')
     if (right == firstChild[0] || left == lastChild[1] || left == firstChild[0] || right == lastChild[1]){
       if (right == firstChild[0]){
         let boardImg = document.createElement("img")
@@ -344,6 +350,7 @@ function computerTurn(){
         opponentHand.splice(index,1) 
         turn = 1
         msg.innerText = `It's the player's turn` 
+        console.log('success')
         win()
         playerTurn()
       } else if (left == firstChild[0]){
@@ -359,7 +366,8 @@ function computerTurn(){
         node.removeAttribute('src')
         opponentHand.splice(index,1)  
         turn = 1
-        msg.innerText = `It's the player's turn`  
+        msg.innerText = `It's the player's turn`
+        console.log('success')  
         win()
         playerTurn()
       } else if (left == lastChild[1]){
@@ -375,6 +383,7 @@ function computerTurn(){
         opponentHand.splice(index,1)  
         turn = 1
         msg.innerText = `It's the player's turn`  
+        console.log('success')
         win()
         playerTurn()
       } else if (right == lastChild[1]){
@@ -391,6 +400,7 @@ function computerTurn(){
         opponentHand.splice(index,1)    
         turn = 1
         msg.innerText = `It's the player's turn`  
+        console.log('success')
         win()
         playerTurn()
       }
