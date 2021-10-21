@@ -34,6 +34,7 @@ player.forEach((element,idx)=>{player[idx].addEventListener('click',playerTurn)}
 init()
 
 function init(){
+  console.log('init')
   deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   startBtn.innerText = "Start Game"
   drawBtn.style.pointerEvents = 'auto'
@@ -50,6 +51,7 @@ function init(){
 }
 
 function handleClick(){
+  console.log('handle click')
   msg.removeAttribute('hidden')
   startBtn.innerText = 'Reset Game'
   startBtn.classList.add('reset-btn')  
@@ -66,6 +68,7 @@ function handleClick(){
 }
 
 function render(dominosPicked){
+  console.log('render')
   //render player hand to board
   if (playerHand.length === 0 && isWinner == null){
   playerHand = dominosPicked.splice(0,7)
@@ -114,12 +117,14 @@ function render(dominosPicked){
 }
 
 function playerTurn(evt){
+  console.log('player turn')
   win()
   //When board is empty
   if (board.childElementCount == 0){
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
+      console.log(evt.target.src)
       let id = evt.target.src.slice(29,33)
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
@@ -141,6 +146,7 @@ function playerTurn(evt){
     if(evt.target.id !== "player"){
       let boardImg = document.createElement("img")
       let source = evt.target.src.slice(21)
+      console.log(evt.target.src)
       let id = evt.target.src.slice(29,33)
       boardImg.setAttribute('id',`${id}`)
       boardImg.setAttribute('src',`${source}`)
@@ -257,6 +263,7 @@ function playerTurn(evt){
 }
 
 function drawTile(){
+  console.log('draw tile')
   let randIdx = Math.floor(Math.random()*deck.length)
   let draw = deck.splice(randIdx,1)
   dominosPicked.push(draw.toString())
@@ -265,6 +272,7 @@ function drawTile(){
 }
 
 function computerTurn(){
+  console.log('computer turn')
   if (turn == -1 && isWinner == null){  
     let right, left
     let firstChild = board.firstElementChild.className.split(' ').splice(1,2)
@@ -346,11 +354,12 @@ function computerTurn(){
         }
       }
     }
-    if (turn == -1){drawTile()}   
   }
+  else {drawTile()}   
 }
 
 function win(){
+  console.log('win')
   if (opponentHand.length == 0 || playerHand.length == 0){
     isWinner = turn * -1
     turn = null
@@ -372,6 +381,7 @@ function win(){
 }
 
 function removeChilds(parent){
+  console.log('remove children')
   while (parent.lastChild) {
       parent.removeChild(parent.lastChild);
   }
