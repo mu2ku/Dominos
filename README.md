@@ -10,7 +10,7 @@ Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 - Once the game has loaded, press "Start Game" to start the game</br>
 - Click on the domino tiles shown on the bottom of the browser to play them to the board</br>
 - Click on the "Draw Tile" button to draw additional tiles if you cannot play a tile to the board</br>
-- Click on the "Restart Game" button to restart the game and play again! :)</br></br>
+- Refresh the page to restart the game and play again! :)</br></br>
 
 <h1>Screenshots:</h1>
 
@@ -45,11 +45,11 @@ Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 
 6) Handle the domino moving to the board if numbers match</br>
 
-7) Handle a player clicking the “Reset Game” button</br></br>
+7) Handle the computer's domino plays
 
 <h1>Technologies Used:</h1>
 
-* Javascript </br>
+* JavaScript </br>
 * HTML </br>
 * CSS </br>
 * Git </br></br>
@@ -58,4 +58,5 @@ Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 
 * Update the CSS to have the dominoes wrap around the board </br>
 * Calculate and keep track of the score for both the computer and player </br>
-* Update and clean up code to use objects </br>
+* Update and clean up JavaScript code to use objects instead of arrays </br>
+* Get the "Restart Game" button to work</br>

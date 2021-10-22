@@ -312,7 +312,10 @@ function computerTurn(){
           playerTurn()
         }
       }
-      else if (i == opponentHand.length-1){drawTile()}   
+      else if (i == opponentHand.length-1){
+        win()
+        drawTile()
+      }   
     }
   }
 }
