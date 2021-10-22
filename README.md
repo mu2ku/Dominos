@@ -32,20 +32,17 @@ Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 
 2) Store cached element references:</br>
   2.1) Ability to draw a new tile if user can’t make move</br>
-  2.2) Ability to reset game once gameplay has started</br>
-  2.3) Ability to select own domino</br>
+  2.2) Ability to select own domino</br>
 
 3) Upon loading, the app should:</br> 
   3.1) Include “Start Game” button, which calls an initialize function to initialize the state variables</br>
   3.2) Render those values to the page</br>
 
-4) Define the required constants</br>
+4) Handle a player clicking a domino</br>
 
-5) Handle a player clicking a domino</br>
+5) Handle the domino moving to the board if numbers match</br>
 
-6) Handle the domino moving to the board if numbers match</br>
-
-7) Handle the computer's domino plays
+6) Handle the computer's domino plays
 
 <h1>Technologies Used:</h1>
 
