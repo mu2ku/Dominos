@@ -94,15 +94,16 @@ function render(dominosPicked){
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
     playerImg.setAttribute("id",`${playerHand[i].name}`)
-    // playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
+    playerImg.classList.add('player',`${playerHand[i].left}`,`_${playerHand[i].right}`)
     playerImg.setAttribute("src",`${playerHand[i].image}`)
     playerBoard.append(playerImg)
   }
 } else if (turn == 1 && playerHand.length > 0){
   playerHand.push(dominosPicked[0])
   let playerImg = document.createElement("img")
-  playerImg.classList.add('player',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
-  playerImg.setAttribute("src",`/images/${dominosPicked[0]}.png`)
+  playerImg.setAttribute('id',`${dominosPicked[0].name}`)
+  playerImg.classList.add('player',`${dominosPicked[0].left}`,`_${dominosPicked[0].right}`)
+  playerImg.setAttribute("src",`${dominosPicked[0].image}`)
   playerBoard.append(playerImg)
   dominosPicked.pop()
 }
@@ -112,16 +113,16 @@ function render(dominosPicked){
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
       opponentImg.setAttribute('id',`${opponentHand[i].name}`)
-      // opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
+      opponentImg.classList.add('opponent','opponentImg',`${opponentHand[i].left}`,`_${opponentHand[i].right}`)
       opponentImg.setAttribute('src',`${opponentHand[i].blank}`)
       opponentBoard.appendChild(opponentImg)
     }
   } else if (opponentHand.length > 0 && turn == -1){
     opponentHand.push(dominosPicked[0])
     let opponentImg = document.createElement("img")
-    opponentImg.setAttribute('id',`${dominosPicked[0]}`)
-    opponentImg.classList.add('opponent','opponentImg',`_${dominosPicked[0].slice(1,2)}`,`_${dominosPicked[0].slice(3)}`)
-    opponentImg.setAttribute('src',`/images/blank.png`)
+    opponentImg.setAttribute('id',`${dominosPicked[0].name}`)
+    opponentImg.classList.add('opponent','opponentImg',`${dominosPicked[0].left}`,`_${dominosPicked[0].right}`)
+    opponentImg.setAttribute('src',`${dominosPicked[0].blank}`)
     opponentBoard.appendChild(opponentImg)
     dominosPicked.pop()
     computerTurn()
@@ -272,7 +273,7 @@ function playerTurn(evt){
 function drawTile(){
   let randIdx = Math.floor(Math.random()*deck.length)
   let draw = deck.splice(randIdx,1)
-  dominosPicked.push(draw.toString())
+  dominosPicked.push(draw[0])
   render(dominosPicked)
   win()
 }
