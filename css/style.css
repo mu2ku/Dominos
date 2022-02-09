@@ -84,3 +84,11 @@ img {
 .rotate {
   transform: rotate(-90deg);
 }
+
+.rotate-pos-ninty{
+  transform: rotate(90deg);
+}
+
+.rotate-neg-ninty{
+  transform: rotate(-90deg);
+}

@@ -7,6 +7,7 @@ let deck = []
 let dominosPicked = []
 let playerHand = []
 let opponentHand = []
+let boardHand = []
 let isWinner = null
 let turn, removeIdx
 
@@ -94,7 +95,7 @@ function render(dominosPicked){
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
     playerImg.setAttribute("id",`${playerHand[i].name}`)
-    playerImg.classList.add('player',`${playerHand[i].left}`,`_${playerHand[i].right}`)
+    playerImg.classList.add('player',`left-${playerHand[i].left}`,`right-${playerHand[i].right}`)
     playerImg.setAttribute("src",`${playerHand[i].image}`)
     playerBoard.append(playerImg)
   }
@@ -102,7 +103,7 @@ function render(dominosPicked){
   playerHand.push(dominosPicked[0])
   let playerImg = document.createElement("img")
   playerImg.setAttribute('id',`${dominosPicked[0].name}`)
-  playerImg.classList.add('player',`${dominosPicked[0].left}`,`_${dominosPicked[0].right}`)
+  playerImg.classList.add('player',`left-${dominosPicked[0].left}`,`right-${dominosPicked[0].right}`)
   playerImg.setAttribute("src",`${dominosPicked[0].image}`)
   playerBoard.append(playerImg)
   dominosPicked.pop()
@@ -113,7 +114,7 @@ function render(dominosPicked){
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
       opponentImg.setAttribute('id',`${opponentHand[i].name}`)
-      opponentImg.classList.add('opponent','opponentImg',`${opponentHand[i].left}`,`_${opponentHand[i].right}`)
+      opponentImg.classList.add('opponent','opponentImg',`left-${opponentHand[i].left}`,`right-${opponentHand[i].right}`)
       opponentImg.setAttribute('src',`${opponentHand[i].blank}`)
       opponentBoard.appendChild(opponentImg)
     }
@@ -121,7 +122,7 @@ function render(dominosPicked){
     opponentHand.push(dominosPicked[0])
     let opponentImg = document.createElement("img")
     opponentImg.setAttribute('id',`${dominosPicked[0].name}`)
-    opponentImg.classList.add('opponent','opponentImg',`${dominosPicked[0].left}`,`_${dominosPicked[0].right}`)
+    opponentImg.classList.add('opponent','opponentImg',`left-${dominosPicked[0].left}`,`right-${dominosPicked[0].right}`)
     opponentImg.setAttribute('src',`${dominosPicked[0].blank}`)
     opponentBoard.appendChild(opponentImg)
     dominosPicked.pop()
@@ -129,21 +130,34 @@ function render(dominosPicked){
   }
 }
 
+function createImage_neg90(element){
+  let boardImg = document.createElement("img")
+  boardImg.setAttribute('id',`${element.name}`)
+  boardImg.setAttribute('src',`${element.image}`)
+  boardImg.setAttribute('src',`${element.image}`)
+  boardImg.classList.add('rotate-neg-ninty',`left-${element.left}`,`right-${element.right}`)
+  return boardImg
+}
+
+function createImage_pos90(element){
+  boardImg.setAttribute('id',`${element.name}`)
+  boardImg.setAttribute('src',`${element.image}`)
+  boardImg.setAttribute('src',`${element.image}`)
+  boardImg.classList.add('rotate-pos-ninty',`left-${element.left}`,`right-${element.right}`)
+}
+
 function playerTurn(evt){
   //When board is empty
-  if (board.childElementCount == 0){
+  if (board.childElementCount === 0){
     if(evt.target.id !== "player"){
-      let boardImg = document.createElement("img")
-      let source = evt.target.src.slice(29)
-      let id = evt.target.src.slice(36,40)
-      boardImg.setAttribute('id',`${id}`)
-      boardImg.setAttribute('src',`${source}`)
-      boardImg.classList.add('rotate',`_${id.slice(1,2)}`,`_${id.slice(3)}`)
-      board.append(boardImg)
-      evt.target.removeAttribute('src')
-      removeIdx = source.slice(7,11)
-      let index = parseInt(playerHand.findIndex((el,idx) =>{return playerHand[idx] == `${removeIdx}`}))
-      playerHand.splice(index,1)  
+      let boardImg = document.createElement("img") //create image element
+      let id = evt.target.id 
+      let index = parseInt(playerHand.findIndex((el, idx) =>{ return playerHand[idx].name === id})) //find index of target in playerHand
+      boardHand.push(playerHand[index]) //push object from playerHand to boardHand
+      createImage_neg90(boardHand[0]) //set attributes and class of image
+      board.append(boardImg) //append image to board
+      playerHand.splice(index,1) //remove domino from hand using index
+      document.getElementById(id).remove() //remove domino from render by removing element
       turn = -1
       msg.innerText = `It's the computer's turn`
       win()
@@ -279,77 +293,95 @@ function drawTile(){
 }
 
 function computerTurn(){
-  if (turn == -1 && isWinner == null){  
-    let right, left
-    let firstChild = board.firstElementChild.className.split(' ').splice(1,2)
-    let lastChild = board.lastElementChild.className.split(' ').splice(1,2)
-    for (let i=0;i<opponentHand.length;i++){
-      left = `_${opponentHand[i].slice(1,2)}`
-      right = opponentHand[i].slice(2)
-      if (right == firstChild[0] || left == lastChild[1] || left == firstChild[0] || right == lastChild[1]){
-        if (right == firstChild[0]){
-          let boardImg = document.createElement("img")
-          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
-          boardImg.classList.add('rotate',left,right)
-          board.prepend(boardImg)
-          let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          let node = document.getElementById(`${opponentHand[index]}`)
-          node.removeAttribute('src')
-          opponentHand.splice(index,1) 
-          turn = 1
-          msg.innerText = `It's the player's turn` 
-          win()
-          playerTurn()
-        } else if (left == firstChild[0]){
-          let boardImg = document.createElement("img")
-          boardImg.style.transform = 'rotate(90deg)'
-          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
-          boardImg.classList.add('rotate',right,left)
-          board.prepend(boardImg)
-          let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          let node = document.getElementById(`${opponentHand[index]}`)
-          node.removeAttribute('src')
-          opponentHand.splice(index,1)  
-          turn = 1
-          msg.innerText = `It's the player's turn`
-          win()
-          playerTurn()
-        } else if (left == lastChild[1]){
-          let boardImg = document.createElement("img") 
-          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
-          boardImg.classList.add('rotate',left,right)
-          board.append(boardImg)
-          let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`})) 
-          let node = document.getElementById(`${opponentHand[index]}`)
-          node.removeAttribute('src') 
-          opponentHand.splice(index,1)  
-          turn = 1
-          msg.innerText = `It's the player's turn`  
-          win()
-          playerTurn()
-        } else if (right == lastChild[1]){
-          let boardImg = document.createElement("img")
-          boardImg.style.transform = 'rotate(90deg)'
-          boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
-          boardImg.classList.add('rotate',right,left)
-          board.append(boardImg)
-          let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
-          let node = document.getElementById(`${opponentHand[index]}`)
-          node.removeAttribute('src')
-          opponentHand.splice(index,1)     
-          turn = 1
-          msg.innerText = `It's the player's turn`  
-          win()
-          playerTurn()
-        }
+  if(turn === -1 && isWinner == null){
+    opponentHand.forEach((el,idx) => {
+      if(el.left === boardHand[0].left){
+        let boardImg = document.createElement("img")
+        boardImg.setAttribute('src',`${el.image}`)
+        boardImg.setAttribute('id',`${el.name}`)
+        boardImg.classList.add('rotate-pos-ninty', `${el.left}`, `${el.right}`)
+        boardHand.unshift(el)
+        board.prepend(boardImg)
+        let node = document.getElementById(`${el.name}`)
+        node.removeAttribute('src')
+        opponentHand.splice(idx,1)
       }
-      else if (i == opponentHand.length-1){
-        win()
-        drawTile()
-      }   
-    }
+    })
   }
 }
+
+// function computerTurn(){
+//   if (turn == -1 && isWinner == null){  
+//     let right, left
+//     let firstChild = board.firstElementChild.className.split(' ').splice(1,2)
+//     let lastChild = board.lastElementChild.className.split(' ').splice(1,2)
+//     for (let i=0;i<opponentHand.length;i++){
+//       left = `_${opponentHand[i].slice(1,2)}`
+//       right = opponentHand[i].slice(2)
+//       if (right == firstChild[0] || left == lastChild[1] || left == firstChild[0] || right == lastChild[1]){
+//         if (right == firstChild[0]){
+//           let boardImg = document.createElement("img")
+//           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+//           boardImg.classList.add('rotate',left,right)
+//           board.prepend(boardImg)
+//           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
+//           let node = document.getElementById(`${opponentHand[index]}`)
+//           node.removeAttribute('src')
+//           opponentHand.splice(index,1) 
+//           turn = 1
+//           msg.innerText = `It's the player's turn` 
+//           win()
+//           playerTurn()
+//         } else if (left == firstChild[0]){
+//           let boardImg = document.createElement("img")
+//           boardImg.style.transform = 'rotate(90deg)'
+//           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+//           boardImg.classList.add('rotate',right,left)
+//           board.prepend(boardImg)
+//           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
+//           let node = document.getElementById(`${opponentHand[index]}`)
+//           node.removeAttribute('src')
+//           opponentHand.splice(index,1)  
+//           turn = 1
+//           msg.innerText = `It's the player's turn`
+//           win()
+//           playerTurn()
+//         } else if (left == lastChild[1]){
+//           let boardImg = document.createElement("img") 
+//           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+//           boardImg.classList.add('rotate',left,right)
+//           board.append(boardImg)
+//           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`})) 
+//           let node = document.getElementById(`${opponentHand[index]}`)
+//           node.removeAttribute('src') 
+//           opponentHand.splice(index,1)  
+//           turn = 1
+//           msg.innerText = `It's the player's turn`  
+//           win()
+//           playerTurn()
+//         } else if (right == lastChild[1]){
+//           let boardImg = document.createElement("img")
+//           boardImg.style.transform = 'rotate(90deg)'
+//           boardImg.setAttribute('src',`/images/d${left.slice(1)}${right}.png`)
+//           boardImg.classList.add('rotate',right,left)
+//           board.append(boardImg)
+//           let index = parseInt(opponentHand.findIndex((el,idx) =>{return opponentHand[idx] == `d${left.slice(1)}${right}`}))
+//           let node = document.getElementById(`${opponentHand[index]}`)
+//           node.removeAttribute('src')
+//           opponentHand.splice(index,1)     
+//           turn = 1
+//           msg.innerText = `It's the player's turn`  
+//           win()
+//           playerTurn()
+//         }
+//       }
+//       else if (i == opponentHand.length-1){
+//         win()
+//         drawTile()
+//       }   
+//     }
+//   }
+// }
 
 function win(){
   if (opponentHand.length == 0 || playerHand.length == 0){
