@@ -34,7 +34,6 @@ player.forEach((element,idx)=>{player[idx].addEventListener('click',playerTurn)}
 init()
 
 function init(){
-  deck = ['d0_0','d0_1','d0_2','d0_3','d0_4','d0_5','d0_6','d1_1','d1_2','d1_3','d1_4','d1_5','d1_6','d2_2','d2_3','d2_4','d2_5','d2_6','d3_3','d3_4','d3_5','d3_6','d4_4','d4_5','d4_6','d5_5','d5_6','d6_6']
   startBtn.innerText = "Start Game"
   drawBtn.style.pointerEvents = 'auto'
   turn = 1
@@ -43,15 +42,46 @@ function init(){
   opponentHand = []
   isWinner = null
   msg.innerText = ''
+  deck =
+    [
+      {name: "d0_0", left: 0, right: 0, image: "/images/d0_0.png", blank: "images/blank.png"},
+      {name: "d0_1", left: 0, right: 1, image: "/images/d0_1.png", blank: "images/blank.png"},
+      {name: "d0_2", left: 0, right: 2, image: "/images/d0_2.png", blank: "images/blank.png"},
+      {name: "d0_3", left: 0, right: 3, image: "/images/d0_3.png", blank: "images/blank.png"},
+      {name: "d0_4", left: 0, right: 4, image: "/images/d0_4.png", blank: "images/blank.png"},
+      {name: "d0_5", left: 0, right: 5, image: "/images/d0_5.png", blank: "images/blank.png"},
+      {name: "d0_6", left: 0, right: 6, image: "/images/d0_6.png", blank: "images/blank.png"},
+      {name: "d1_1", left: 1, right: 1, image: "/images/d1_1.png", blank: "images/blank.png"},
+      {name: "d1_2", left: 1, right: 2, image: "/images/d1_2.png", blank: "images/blank.png"},
+      {name: "d1_3", left: 1, right: 3, image: "/images/d1_3.png", blank: "images/blank.png"},
+      {name: "d1_4", left: 1, right: 4, image: "/images/d1_4.png", blank: "images/blank.png"},
+      {name: "d1_5", left: 1, right: 5, image: "/images/d1_5.png", blank: "images/blank.png"},
+      {name: "d1_6", left: 1, right: 6, image: "/images/d1_6.png", blank: "images/blank.png"},
+      {name: "d2_2", left: 2, right: 2, image: "/images/d2_2.png", blank: "images/blank.png"},
+      {name: "d2_3", left: 2, right: 3, image: "/images/d2_3.png", blank: "images/blank.png"},
+      {name: "d2_4", left: 2, right: 4, image: "/images/d2_4.png", blank: "images/blank.png"},
+      {name: "d2_5", left: 2, right: 5, image: "/images/d2_5.png", blank: "images/blank.png"},
+      {name: "d2_6", left: 2, right: 6, image: "/images/d2_6.png", blank: "images/blank.png"},
+      {name: "d3_3", left: 3, right: 3, image: "/images/d3_3.png", blank: "images/blank.png"},
+      {name: "d3_4", left: 3, right: 4, image: "/images/d3_4.png", blank: "images/blank.png"},
+      {name: "d3_5", left: 3, right: 5, image: "/images/d3_5.png", blank: "images/blank.png"},
+      {name: "d3_6", left: 3, right: 6, image: "/images/d3_6.png", blank: "images/blank.png"},
+      {name: "d4_4", left: 4, right: 4, image: "/images/d4_4.png", blank: "images/blank.png"},
+      {name: "d4_5", left: 4, right: 5, image: "/images/d4_5.png", blank: "images/blank.png"},
+      {name: "d4_6", left: 4, right: 6, image: "/images/d4_6.png", blank: "images/blank.png"},
+      {name: "d5_5", left: 5, right: 5, image: "/images/d5_5.png", blank: "images/blank.png"},
+      {name: "d5_6", left: 5, right: 6, image: "/images/d5_6.png", blank: "images/blank.png"},
+      {name: "d6_6", left: 6, right: 6, image: "/images/d6_6.png", blank: "images/blank.png"
+      }
+    ]
 }
 
 function handleClick(){
-  msg.removeAttribute('hidden')
   if (deck.length > 14){
-    for (let i=0;i<14;i++){
+    for (let i=0; i<14; i++) {
       let randIdx = Math.floor(Math.random()*deck.length)
       let shuffle = deck.splice(randIdx,1)
-      dominosPicked.push(shuffle.toString())
+      dominosPicked.push(shuffle[0])
     }
     render(dominosPicked)
   }
@@ -63,9 +93,9 @@ function render(dominosPicked){
   playerHand = dominosPicked.splice(0,7)
   for(let i=0;i<playerHand.length;i++){
     let playerImg = document.createElement("img")
-    playerImg.setAttribute("id",`d${playerHand[i].slice(1,2)}_${playerHand[i].slice(3)}`)
-    playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
-    playerImg.setAttribute("src",`/images/${playerHand[i]}.png`)
+    playerImg.setAttribute("id",`${playerHand[i].name}`)
+    // playerImg.classList.add('player',`_${playerHand[i].slice(1,2)}`,`_${playerHand[i].slice(3)}`)
+    playerImg.setAttribute("src",`${playerHand[i].image}`)
     playerBoard.append(playerImg)
   }
 } else if (turn == 1 && playerHand.length > 0){
@@ -81,9 +111,9 @@ function render(dominosPicked){
     opponentHand = dominosPicked.splice(0,7)
     for (let i=0;i<opponentHand.length;i++){
       let opponentImg = document.createElement("img")
-      opponentImg.setAttribute('id',`${opponentHand[i]}`)
-      opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
-      opponentImg.setAttribute('src',`/images/blank.png`)
+      opponentImg.setAttribute('id',`${opponentHand[i].name}`)
+      // opponentImg.classList.add('opponent','opponentImg',`_${opponentHand[i].slice(1,2)}`,`_${opponentHand[i].slice(3)}`)
+      opponentImg.setAttribute('src',`${opponentHand[i].blank}`)
       opponentBoard.appendChild(opponentImg)
     }
   } else if (opponentHand.length > 0 && turn == -1){
