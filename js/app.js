@@ -90,24 +90,24 @@ function handleClick(){
 
 function render(dominosPicked){
   //render player hand to board
-  if (playerHand.length === 0 && isWinner == null){
-  playerHand = dominosPicked.splice(0,7)
-  for(let i=0;i<playerHand.length;i++){
+  if (playerHand.length === 0 && isWinner == null) {
+    playerHand = dominosPicked.splice(0,7)
+    for(let i=0;i<playerHand.length;i++) {
+      let playerImg = document.createElement("img")
+      playerImg.setAttribute("id",`${playerHand[i].name}`)
+      playerImg.classList.add('player',`left-${playerHand[i].left}`,`right-${playerHand[i].right}`)
+      playerImg.setAttribute("src",`${playerHand[i].image}`)
+      playerBoard.append(playerImg)
+    }
+  } else if (turn == 1 && playerHand.length > 0){
+    playerHand.push(dominosPicked[0])
     let playerImg = document.createElement("img")
-    playerImg.setAttribute("id",`${playerHand[i].name}`)
-    playerImg.classList.add('player',`left-${playerHand[i].left}`,`right-${playerHand[i].right}`)
-    playerImg.setAttribute("src",`${playerHand[i].image}`)
+    playerImg.setAttribute('id',`${dominosPicked[0].name}`)
+    playerImg.classList.add('player',`left-${dominosPicked[0].left}`,`right-${dominosPicked[0].right}`)
+    playerImg.setAttribute("src",`${dominosPicked[0].image}`)
     playerBoard.append(playerImg)
+    dominosPicked.pop()
   }
-} else if (turn == 1 && playerHand.length > 0){
-  playerHand.push(dominosPicked[0])
-  let playerImg = document.createElement("img")
-  playerImg.setAttribute('id',`${dominosPicked[0].name}`)
-  playerImg.classList.add('player',`left-${dominosPicked[0].left}`,`right-${dominosPicked[0].right}`)
-  playerImg.setAttribute("src",`${dominosPicked[0].image}`)
-  playerBoard.append(playerImg)
-  dominosPicked.pop()
-}
   //render opponent hand to board
   if (opponentHand.length === 0 && isWinner == null){
     opponentHand = dominosPicked.splice(0,7)
@@ -130,33 +130,42 @@ function render(dominosPicked){
   }
 }
 
-function createImage_neg90(element){
-  let boardImg = document.createElement("img")
-  boardImg.setAttribute('id',`${element.name}`)
-  boardImg.setAttribute('src',`${element.image}`)
-  boardImg.setAttribute('src',`${element.image}`)
-  boardImg.classList.add('rotate-neg-ninty',`left-${element.left}`,`right-${element.right}`)
-  return boardImg
-}
+class boardTile {
+  constructor(id,image,left,right){
+    this.id = id;
+    this.image = image;
+    this.left = left;
+    this.right = right;
+  }
 
-function createImage_pos90(element){
-  boardImg.setAttribute('id',`${element.name}`)
-  boardImg.setAttribute('src',`${element.image}`)
-  boardImg.setAttribute('src',`${element.image}`)
-  boardImg.classList.add('rotate-pos-ninty',`left-${element.left}`,`right-${element.right}`)
+  createImage(){
+    let boardImg = document.createElement("img")
+    boardImg.setAttribute('id',`${this.id}`)
+    boardImg.setAttribute('src',`${this.image}`)
+    return boardImg
+  }
+
+  neg90(boardImg){
+    boardImg.classList.add('rotate-neg-ninty',`left-${this.left}`,`right-${this.right}`)
+    return boardImg
+  }
+
+  pos90(boardImg){
+    boardImg.classList.add('rotate-pos-ninty',`left-${this.left}`,`right-${this.right}`)
+    return boardImg
+  }
 }
 
 function playerTurn(evt){
   //When board is empty
   if (board.childElementCount === 0){
     if(evt.target.id !== "player"){
-      let boardImg = document.createElement("img") //create image element
       let id = evt.target.id 
       let index = parseInt(playerHand.findIndex((el, idx) =>{ return playerHand[idx].name === id})) //find index of target in playerHand
       boardHand.push(playerHand[index]) //push object from playerHand to boardHand
-      createImage_neg90(boardHand[0]) //set attributes and class of image
-      board.append(boardImg) //append image to board
-      playerHand.splice(index,1) //remove domino from hand using index
+      let boardImg = new boardTile(id, playerHand[index].image, playerHand[index].left, playerHand[index].right) //create new boardTile object
+      board.append(boardImg.neg90(boardImg.createImage())) //append image to board
+      playerHand.splice(index,1) //remove domino from player hand using index
       document.getElementById(id).remove() //remove domino from render by removing element
       turn = -1
       msg.innerText = `It's the computer's turn`
@@ -295,19 +304,37 @@ function drawTile(){
 function computerTurn(){
   if(turn === -1 && isWinner == null){
     opponentHand.forEach((el,idx) => {
+      let boardImg = new boardTile(el.name, el.image, el.left, el.right) //create new boardTile object
       if(el.left === boardHand[0].left){
-        let boardImg = document.createElement("img")
-        boardImg.setAttribute('src',`${el.image}`)
-        boardImg.setAttribute('id',`${el.name}`)
-        boardImg.classList.add('rotate-pos-ninty', `${el.left}`, `${el.right}`)
-        boardHand.unshift(el)
-        board.prepend(boardImg)
-        let node = document.getElementById(`${el.name}`)
-        node.removeAttribute('src')
-        opponentHand.splice(idx,1)
+        board.prepend(boardImg.pos90(boardImg.createImage())) //append image to board
+        boardHand.unshift(el) //add new object to beginning of boardHand array
+        turn = 1;
+      }
+      else if(el.right === boardHand[0].left){
+        board.prepend(boardImg.neg90(boardImg.createImage())) //append image to board
+        boardHand.unshift(el) //add new object to beginning of boardHand array
+        turn = 1;
+      }
+      else if(el.left === boardHand[boardHand.length-1].right){
+        board.append(boardImg.neg90(boardImg.createImage())) //append image to board
+        boardHand.push(el) //add new object to end of boardHand array
+        turn = 1;
+      }
+      else if(el.right === boardHand[boardHand.length-1].right){
+        board.append(boardImg.pos90(boardImg.createImage())) //append image to board
+        boardHand.push(el) //add new object to end of boardHand array
+      }
+      if(turn == 1){
+        document.getElementById(`${el.name}`).remove() //remove el from render of opponent hand
+        opponentHand.splice(idx,1) //remove el from opponentHand array
+        msg.innerText = `It's the player's turn`
+        win()
+        playerTurn()
       }
     })
   }
+  win()
+  drawTile()
 }
 
 // function computerTurn(){
