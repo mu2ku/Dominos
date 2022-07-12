@@ -249,7 +249,11 @@ function computerTurn(){
       let boardImg = new boardTile(el.name, el.image, el.left, el.right) //create new boardTile object
       if(el.left === boardHand[0].left){
         board.prepend(boardImg.pos90(boardImg.createImage())) //append image to board
-        boardHand.unshift(el) //add new object to beginning of boardHand array
+        let tempTile = el;
+        let tempLeft = el.left
+        tempTile.left = el.right
+        tempTile.right = tempLeft
+        boardHand.unshift(tempTile) //add new object to beginning of boardHand array
         turn = 1;
       }
       else if(el.right === boardHand[0].left){
@@ -264,7 +268,12 @@ function computerTurn(){
       }
       else if(el.right === boardHand[boardHand.length-1].right){
         board.append(boardImg.pos90(boardImg.createImage())) //append image to board
-        boardHand.push(el) //add new object to end of boardHand array
+        let tempTile = el;
+        let tempLeft = el.left;
+        tempTile.left = el.right;
+        tempTile.right = tempLeft;
+        boardHand.push(tempTile); //add new object to end of boardHand array
+        turn = 1;
       }
       if(turn == 1){
         document.getElementById(`${el.name}`).remove() //remove el from render of opponent hand
