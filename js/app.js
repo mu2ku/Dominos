@@ -41,6 +41,7 @@ function init(){
   dominosPicked = []
   playerHand = []
   opponentHand = []
+  boardHand = []
   isWinner = null
   msg.innerText = ''
   deck =
@@ -83,10 +84,23 @@ function handleClick(){
       let randIdx = Math.floor(Math.random()*deck.length)
       let shuffle = deck.splice(randIdx,1)
       dominosPicked.push(shuffle[0])
+      startBtn.innerText = "Restart Game"
     }
     render(dominosPicked)
+  } else {
+    init()
+    while (board.firstChild) {
+      board.removeChild(board.lastChild);
+    }
+    while (playerBoard.firstChild) {
+      playerBoard.removeChild(playerBoard.lastChild);
+    }
+    while (opponentBoard.firstChild) {
+      opponentBoard.removeChild(opponentBoard.lastChild);
+    }
   }
 }
+
 
 function render(dominosPicked){
   //render player hand to board
