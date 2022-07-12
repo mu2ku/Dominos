@@ -55,5 +55,4 @@ Click [here](https://sei-dominos.surge.sh/) to play game.</br>
 
 * Update the CSS to have the dominoes wrap around the board </br>
 * Calculate and keep track of the score for both the computer and player </br>
-* Update and clean up JavaScript code to use objects instead of arrays </br>
-* Get the "Restart Game" button to work</br>
+* Use CSS animations to show tiles translating to board </br>
